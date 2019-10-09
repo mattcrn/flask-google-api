@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+    flask-google-api-service:
+        build: .
+        container_name: flask-google-api
+        restart: always
+        environment:
+            VIRTUAL_HOST: flask-google.local
+        ports:
+            - "5000"
+        volumes:
+            - './app:/app'
+        networks:
+            - docker-nginx-proxy_default
+networks:
+    docker-nginx-proxy_default:
+        external: true
