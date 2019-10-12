@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, escape
 from google_sheet import addSong
 import pprint
 
@@ -10,8 +10,8 @@ def greeting():
 
 @app.route('/suggest-song', methods=['POST'])
 def handle_song():
-    artist = request.form['artist']
-    song = request.form['song']
+    artist = escape(request.form['artist'])
+    song = escape(request.form['song'])
 
     if(artist != "" and song != ""):
         addSong([artist, song])
