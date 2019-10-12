@@ -4,6 +4,10 @@ import pprint
 
 app = Flask(__name__)
 
+@app.route('/')
+def greeting():
+    return 'Hello from the other side!'
+
 @app.route('/suggest-song', methods=['POST'])
 def handle_song():
     artist = request.form['artist']
