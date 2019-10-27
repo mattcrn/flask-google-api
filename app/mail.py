@@ -1,32 +1,53 @@
 import smtplib
 import os
+import re
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 
-load_dotenv()
+class Mail:
+    to = []
+    subject = ''
+    body = ''
+    reply_to = ''
 
-gmail_user = os.getenv("GMAIL_ACCOUNT")
-gmail_password = os.getenv("GMAIL_PASSWORD")
+    def __init__(self, to, subject):
+        self.to = to
+        self.subject = subject
 
-sent_from = 'Nadine & Matthias <'+ gmail_user + '>'
-to = [os.getenv("TEST_MAIL")]
-subject = 'OMG Super Important Message'
-body = 'Hey, whats up?\n\n- Nadine & Matthias'
+    def get_plain(self):
+        plain= re.compile('<.*?>')
+        return re.sub(plain, '', self.body)
 
-email_text = """\
-From: %s
-To: %s
-Subject: %s
+    def send(self):
+        load_dotenv()
+        gmail_user = os.getenv("GMAIL_ACCOUNT")
+        gmail_password = os.getenv("GMAIL_PASSWORD")
+        sent_from = 'Nadine & Matthias <' + gmail_user + '>'
 
-%s
-""" % (sent_from, ", ".join(to), subject, body)
+        message = MIMEMultipart("alternative")
+        message["Subject"] = self.subject
+        message["From"] = sent_from
+        message["To"] = ', '.join(self.to)
 
-try:
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    server.ehlo()
-    server.login(gmail_user, gmail_password)
-    server.sendmail(sent_from, to, email_text)
-    server.close()
+        html = MIMEText(self.body, 'html')
+        plain = MIMEText(self.get_plain(), 'plain')
 
-    print('Email sent!')
-except:
-    print('Something went wrong...')
+        # Add HTML/plain-text parts to MIMEMultipart message
+        # The email client will try to render the last part first
+        message.attach(html)
+        message.attach(plain)
+
+        if(self.reply_to != ''):
+                message.add_header('reply-to', self.reply_to)
+
+        try:
+            server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            server.ehlo()
+            server.login(gmail_user, gmail_password)
+            server.sendmail(sent_from, self.to, message.as_string())
+            server.close()
+
+            return 'Email sent!'
+        except:
+            return 'Something went wrong...'

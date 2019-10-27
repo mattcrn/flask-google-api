@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify, escape
+from flask import Flask, request, jsonify, escape, render_template
 from google_sheet import addSong
+from mail import Mail
 import pprint
 
 app = Flask(__name__)
@@ -7,6 +8,17 @@ app = Flask(__name__)
 @app.route('/')
 def greeting():
     return 'Hello from the other side!'
+
+@app.route('/send-mail')
+def send_mail():
+
+    data = {'name': 'Matthias', 'name1': 'Nadine', 'name2': 'Khaleesi'}
+
+    rsvp = Mail(['another@mail.com'], data['name'] + ' hat zugesagt!')
+    rsvp.body = render_template('rsvp.txt', data=data)
+    rsvp.reply_to = 'some@mail.com'
+    return rsvp.send()
+
 
 @app.route('/suggest-song', methods=['POST'])
 def handle_song():

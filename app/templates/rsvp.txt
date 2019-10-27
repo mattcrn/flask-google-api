@@ -1,0 +1,8 @@
+<strong>{{ data.name }}</strong> hat zugesagt und bringt außerdem noch folgende Leute mit:<br>
+</br>
+<ul>
+<li> {{ data.name1 }} </li>
+<li> {{ data.name2 }} </li>
+</ul>
+
+Viel Spaß bei der Hochzeit!
