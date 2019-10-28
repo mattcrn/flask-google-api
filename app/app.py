@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, escape, render_template
 from google_sheet import addSong
 from mail import Mail
 import pprint
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
@@ -9,14 +11,14 @@ app = Flask(__name__)
 def greeting():
     return 'Hello from the other side!'
 
-@app.route('/send-mail')
+@app.route('/send-mail', methods=['POST'])
 def send_mail():
 
-    data = {'name': 'Matthias', 'name1': 'Nadine', 'name2': 'Khaleesi'}
+    data = request.json
 
-    rsvp = Mail(['another@mail.com'], data['name'] + ' hat zugesagt!')
+    rsvp = Mail([os.getenv("TEST_MAIL")], data['guest']['1']['name'] + ' hat zugesagt!')
     rsvp.body = render_template('rsvp.txt', data=data)
-    rsvp.reply_to = 'some@mail.com'
+    rsvp.reply_to = data['guest']['1']['mail']
     return rsvp.send()
 
 

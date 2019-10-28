@@ -1,8 +1,18 @@
-<strong>{{ data.name }}</strong> hat zugesagt und bringt außerdem noch folgende Leute mit:<br>
+<strong>{{ data['guest']['1']['name'] }}</strong> kommt zu euerer Hochzeit!
+
 </br>
+{% for key, guest in data['guest'].items() %}
 <ul>
-<li> {{ data.name1 }} </li>
-<li> {{ data.name2 }} </li>
+  <li> {{ guest['name'] }} </li>
 </ul>
+{% endfor %}
+
+{% if data['personal-message'] %}
+<br>
+Außerdem möchte sie/er euch noch folgendes mitteilen:
+<br>
+{{ data['personal-message'] }}
+<br>
+{% endif %}
 
 Viel Spaß bei der Hochzeit!
