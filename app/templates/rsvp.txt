@@ -1,12 +1,13 @@
 <strong>{{ data['guest']['1']['name'] }}</strong> kommt zu euerer Hochzeit!
 
 </br>
-{% for key, guest in data['guest'].items() %}
 <ul>
+{% for key, guest in data['guest'].items() %}
+  {% if guest['name'] %}
   <li> {{ guest['name'] }} </li>
-</ul>
+  {% endif %}
 {% endfor %}
-
+</ul>
 {% if data['personal-message'] %}
 <br>
 Außerdem möchte sie/er euch noch folgendes mitteilen:
