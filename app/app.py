@@ -16,16 +16,18 @@ def greeting():
 @app.route('/send-mail', methods=['POST'])
 def send_mail():
 
+
     logging.basicConfig(level=logging.DEBUG, filename='debug.log')
     data = request.json
 
     # remove all empty values
     clean_data = clean_empty(data)
-
-    # logging.debug('data after sanitation: %s', test)
+    # add sender email
+    clean_data.update( {'sender_email' : os.getenv("GMAIL_ACCOUNT")} )
+    logging.debug('data after sanitation: %s', clean_data)
 
     rsvp = Mail([os.getenv("TEST_MAIL")], data['guest']['1']['name'] + ' hat zugesagt!')
-    rsvp.body = render_template('rsvp.txt', data=clean_data)
+    rsvp.body = render_template('hotel-booking.txt', data=clean_data)
     rsvp.reply_to = data['guest']['1']['mail']
     return rsvp.send()
 

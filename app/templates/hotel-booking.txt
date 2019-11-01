@@ -1,0 +1,49 @@
+Liebes GIP Team,
+<br><br>
+für die Hochzeit von Nadine und Matthias am 01.05.2020 möchten wir gerne ein Zimmer reservieren.
+<br><br>
+Reserviert wird für
+<br><br>
+<strong>Name:</strong>
+<br>
+{{ data['guest']['1']['name'] }}
+<br><br>
+<strong>Geboren am:</strong>
+<br>
+{{ data['guest']['1']['birthday']['day'] + 
+'.' + data['guest']['1']['birthday']['month'] + 
+'.' + data['guest']['1']['birthday']['year']}}
+<br><br>
+<strong>Wohnhaft in:</strong>
+<br>
+{{ data['guest']['1']['address']['street'] }}<br>
+{{ data['guest']['1']['address']['zip'] }}<br>
+{{ data['guest']['1']['address']['city'] }}<br>
+{{ data['guest']['1']['address']['country'] }}<br>
+<br>
+<strong>Erreichbar unter:</strong>
+<br>
+Tel.: {{ data['guest']['1']['phone'] }}<br>
+Email: {{ data['guest']['1']['mail'] }}<br>
+
+{% if data['guest']|length > 1 %}
+<br>
+Mit {{ data['guest']['1']['name'] }} kommt außerdem noch
+{% endif %}
+<ul>
+{% for key, guest in data['guest'].items() %}
+  {% if guest['name'] and key != '1' %}
+  <li>{{ guest['name'] }} 
+  <br> geboren am {{ guest['birthday']['day'] + 
+'.' + guest['birthday']['month'] + 
+'.' + guest['birthday']['year']}} <br><br>
+  </li>
+  {% endif %}
+{% endfor %}
+</ul>
+<br>
+Für etwaige Fragen könnt ihr direkt auf diese Email antworten
+um mit {{ data['guest']['1']['name'] }} in Kontakt zu treten oder ihr schreibt eine neue Email an 
+{{ data['sender_email'] }} um mit dem Brautpaar in Verbindung zu treten.
+
+Mit lieben Grüßen {{ data['guest']['1']['name'] }}

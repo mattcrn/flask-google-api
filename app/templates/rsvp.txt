@@ -1,10 +1,13 @@
 <strong>{{ data['guest']['1']['name'] }}</strong> kommt zu euerer Hochzeit!
 
-</br>
+<br>
+{% if data['guest']|length > 1 %}
+Außerdem bringt er/sie noch folgende Leute mit!
+{% endif %}
 <ul>
 {% for key, guest in data['guest'].items() %}
-  {% if guest['name'] %}
-  <li> {{ guest['name'] }} </li>
+  {% if guest['name'] and key != '1' %}
+  <li> {{ key }} {{ guest['name'] }} </li>
   {% endif %}
 {% endfor %}
 </ul>
