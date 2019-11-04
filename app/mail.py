@@ -48,6 +48,6 @@ class Mail:
             server.sendmail(sent_from, self.to, message.as_string())
             server.close()
 
-            return 'Email sent!'
+            return True
         except:
-            return 'Something went wrong...'
+            return False
