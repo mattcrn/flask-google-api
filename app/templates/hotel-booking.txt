@@ -1,6 +1,6 @@
 Liebes GIP Team,
 <br><br>
-für die Hochzeit von Nadine und Matthias am 01.05.2020 möchten wir gerne ein Zimmer reservieren.
+für die Hochzeit von Nadine Scheitz und Matthias Frank am 01.05.2020 möchten wir gerne ein Zimmer für eine Nacht von 01.05.2020 bis 02.05.2020 reservieren.
 <br><br>
 Reserviert wird für
 <br><br>
@@ -28,7 +28,7 @@ Email: {{ data['guest']['1']['mail'] }}<br>
 
 {% if data['guest']|length > 1 %}
 <br>
-Mit {{ data['guest']['1']['name'] }} kommt außerdem noch
+Mit {{ data['guest']['1']['name'] }} in einem Zimmer schlafen außerdem noch
 {% endif %}
 <ul>
 {% for key, guest in data['guest'].items() %}
