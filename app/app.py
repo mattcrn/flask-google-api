@@ -37,6 +37,7 @@ def send_mail():
         # send hotel reservation
         hotel_booking = Mail([os.getenv("HOTEL_MAIL")], 'Hochzeit 01.05.2020 Nadine Scheitz und Matthias Frank')
         hotel_booking.body = render_template('hotel-booking.txt', data=clean_data)
+        hotel_booking.cc = [clean_data['guest']['1']['mail']]
         hotel_booking.reply_to = clean_data['guest']['1']['mail']
         assert(hotel_booking.send()), 'Could not send Hotel reservation Mail'
 

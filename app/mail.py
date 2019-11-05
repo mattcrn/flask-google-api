@@ -10,6 +10,7 @@ class Mail:
     subject = ''
     body = ''
     reply_to = ''
+    cc = []
 
     def __init__(self, to, subject):
         self.to = to
@@ -29,7 +30,8 @@ class Mail:
         message["Subject"] = self.subject
         message["From"] = sent_from
         message["To"] = ', '.join(self.to)
-
+        if(self.cc != ''):
+            message["CC"] = ', '.join(self.cc)
         html = MIMEText(self.body, 'html')
         plain = MIMEText(self.get_plain(), 'plain')
 
@@ -38,14 +40,14 @@ class Mail:
         message.attach(html)
         message.attach(plain)
 
-        if(self.reply_to != ''):
+        if len(self.cc) :
                 message.add_header('reply-to', self.reply_to)
 
         try:
             server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
             server.ehlo()
             server.login(gmail_user, gmail_password)
-            server.sendmail(sent_from, self.to, message.as_string())
+            server.sendmail(sent_from, self.to+self.cc, message.as_string())
             server.close()
 
             return True
