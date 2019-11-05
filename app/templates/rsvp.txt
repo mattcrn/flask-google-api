@@ -7,7 +7,7 @@ Außerdem bringt er/sie noch folgende Leute mit!
 <ul>
 {% for key, guest in data['guest'].items() %}
   {% if guest['name'] and key != '1' %}
-  <li> {{ key }} {{ guest['name'] }} </li>
+  <li>{{ guest['name'] }} </li>
   {% endif %}
 {% endfor %}
 </ul>
