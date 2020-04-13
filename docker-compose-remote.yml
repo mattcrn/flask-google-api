@@ -5,7 +5,7 @@ services:
         container_name: flask-google-api
         restart: always
         environment:
-            VIRTUAL_HOST: 104.248.33.87
+            VIRTUAL_HOST: flask-google.mattcrn.at
         ports:
             - "5000"
         volumes:
