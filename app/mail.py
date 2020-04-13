@@ -41,7 +41,8 @@ class Mail:
         message.attach(plain)
 
         if len(self.reply_to) :
-                message.add_header('reply-to', ', '.join(self.reply_to))
+                message.add_header('reply-to', self.reply_to)
+                
 
         try:
             server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
