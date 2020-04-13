@@ -1,0 +1,8 @@
+Nachricht von <strong>{{ data['name'] }}</strong>:
+<br>
+<br>
+
+{{ data['personal-message'] }}
+
+<br>
+

@@ -25,21 +25,21 @@ def send_mail():
     clean_data = clean_empty(data)
     # add sender email
     clean_data.update({'sender_email': os.getenv("GMAIL_ACCOUNT")})
-    logging.debug('data after sanitation: %s', clean_data)
 
     # send rsvp
-    rsvp = Mail([os.getenv("RSVP_MAIL")], clean_data['guest']
-                ['1']['name'] + ' hat zugesagt!')
-    rsvp.body = render_template('rsvp.txt', data=clean_data)
+    rsvp = Mail([os.getenv("RSVP_MAIL")], '[Foreverstories] Neue Nachricht von ' + clean_data['name'])
+    rsvp.body = render_template('personal-message.txt', data=clean_data)
+    logging.debug('rendered template: %s', rsvp.body)
+    rsvp.reply_to = clean_data['email']
     assert(rsvp.send()), 'Could not send RSVP Mail'
 
-    if('hotel' in clean_data):
-        # send hotel reservation
-        hotel_booking = Mail([os.getenv("HOTEL_MAIL")], 'Hochzeit 01.05.2020 Nadine Scheitz und Matthias Frank')
-        hotel_booking.body = render_template('hotel-booking.txt', data=clean_data)
-        hotel_booking.cc = [clean_data['guest']['1']['mail']]
-        hotel_booking.reply_to = clean_data['guest']['1']['mail']
-        assert(hotel_booking.send()), 'Could not send Hotel reservation Mail'
+#    if('hotel' in clean_data):
+#        # send hotel reservation
+#        hotel_booking = Mail([os.getenv("HOTEL_MAIL")], 'Hochzeit 01.05.2020 Nadine Scheitz und Matthias Frank')
+#        hotel_booking.body = render_template('hotel-booking.txt', data=clean_data)
+#        hotel_booking.cc = [clean_data['guest']['1']['mail']]
+#        hotel_booking.reply_to = clean_data['guest']['1']['mail']
+#        assert(hotel_booking.send()), 'Could not send Hotel reservation Mail'
 
     return jsonify('Email sent!')
 
