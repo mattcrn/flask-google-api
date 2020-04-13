@@ -1,3 +1,4 @@
 app/client_secret.json
 app/.env
 app/debug.log
+app/__pycache__

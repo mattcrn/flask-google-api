@@ -9,7 +9,7 @@ class Mail:
     to = []
     subject = ''
     body = ''
-    reply_to = ''
+    reply_to = []
     cc = []
 
     def __init__(self, to, subject):
@@ -40,8 +40,8 @@ class Mail:
         message.attach(html)
         message.attach(plain)
 
-        if len(self.cc) :
-                message.add_header('reply-to', self.reply_to)
+        if len(self.reply_to) :
+                message.add_header('reply-to', ', '.join(self.reply_to))
 
         try:
             server = smtplib.SMTP_SSL('smtp.gmail.com', 465)

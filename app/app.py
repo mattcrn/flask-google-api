@@ -33,6 +33,7 @@ def send_mail():
     rsvp.reply_to = clean_data['email']
     assert(rsvp.send()), 'Could not send RSVP Mail'
 
+<<<<<<< HEAD
 #    if('hotel' in clean_data):
 #        # send hotel reservation
 #        hotel_booking = Mail([os.getenv("HOTEL_MAIL")], 'Hochzeit 01.05.2020 Nadine Scheitz und Matthias Frank')
@@ -40,6 +41,15 @@ def send_mail():
 #        hotel_booking.cc = [clean_data['guest']['1']['mail']]
 #        hotel_booking.reply_to = clean_data['guest']['1']['mail']
 #        assert(hotel_booking.send()), 'Could not send Hotel reservation Mail'
+=======
+    if('hotel' in clean_data):
+        # send hotel reservation
+        hotel_booking = Mail([os.getenv("HOTEL_MAIL")], 'Hochzeit 01.05.2020 Nadine Scheitz und Matthias Frank')
+        hotel_booking.body = render_template('hotel-booking.txt', data=clean_data)
+        hotel_booking.cc = [clean_data['guest']['1']['mail']]
+        hotel_booking.reply_to = [clean_data['guest']['1']['mail'], os.getenv("GMAIL_ACCOUNT")]
+        assert(hotel_booking.send()), 'Could not send Hotel reservation Mail'
+>>>>>>> f91105543dd6352711e6bb42e24262461ed550e1
 
     return jsonify('Email sent!')
 
