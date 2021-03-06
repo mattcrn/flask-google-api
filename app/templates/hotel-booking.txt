@@ -1,38 +1,50 @@
-Liebes GIP Team,
+Liebes Hannersberg Team,
 <br><br>
-für die Hochzeit von Nadine Scheitz und Matthias Frank am 01.05.2020 möchten wir gerne ein Zimmer für eine Nacht von 01.05.2020 bis 02.05.2020 reservieren.
+für die Hochzeit von Nadine Scheitz und Matthias Frank am 12.08.2021 möchten wir gerne 
+{% if data['room']['value'] == 'single-chalet' %}
+  ein Chalet
+{% endif %}
+{% if data['room']['value'] == 'double-chalet' %}
+  zwei Chalets mit Verbindungstür
+{% endif %}
+{% if data['bed']['value'] == 'crib' %}
+  mit einem Gitterbett
+{% endif %}
+{% if data['bed']['value'] == 'extra-bed' %}
+  mit einem Gitterbett
+{% endif %}
+ für eine Nacht von 12.08.2021 bis 13.08.2021 reservieren.
 <br><br>
 Reserviert wird für
 <br><br>
 <strong>Name:</strong>
 <br>
-{{ data['guest']['1']['name'] }}
+{{ data['guests'][0]['name'] }}
 <br><br>
 <strong>Geboren am:</strong>
 <br>
-{{ data['guest']['1']['birthday']['day'] + 
-'.' + data['guest']['1']['birthday']['month'] + 
-'.' + data['guest']['1']['birthday']['year']}}
+{{ data['guests'][0]['birthday']['day'] + 
+'.' + data['guests'][0]['birthday']['month'] + 
+'.' + data['guests'][0]['birthday']['year']}}
 <br><br>
 <strong>Wohnhaft in:</strong>
 <br>
-{{ data['guest']['1']['address']['street'] }}<br>
-{{ data['guest']['1']['address']['zip'] }}<br>
-{{ data['guest']['1']['address']['city'] }}<br>
-{{ data['guest']['1']['address']['country'] }}<br>
+{{ data['guests'][0]['address']['street'] }}<br>
+{{ data['guests'][0]['address']['zip'] }}<br>
+{{ data['guests'][0]['address']['city'] }}<br>
+{{ data['guests'][0]['address']['country'] }}<br>
 <br>
 <strong>Erreichbar unter:</strong>
 <br>
-Tel.: {{ data['guest']['1']['phone'] }}<br>
-Email: {{ data['guest']['1']['mail'] }}<br>
+Tel.: {{ data['guests'][0]['phone'] }}<br>
+Email: {{ data['guests'][0]['mail'] }}<br>
 
-{% if data['guest']|length > 1 %}
+{% if data['guests']|length > 1 %}
 <br>
-Mit {{ data['guest']['1']['name'] }} in einem Zimmer schlafen außerdem noch
-{% endif %}
+Mit {{ data['guests'][0]['name'] }} kommen außerdem noch
 <ul>
-{% for key, guest in data['guest'].items() %}
-  {% if guest['name'] and key != '1' %}
+{% for guest in data['guests'][1:] %}
+  {% if guest['name'] %}
   <li>{{ guest['name'] }} 
   <br> geboren am {{ guest['birthday']['day'] + 
 '.' + guest['birthday']['month'] + 
@@ -41,9 +53,17 @@ Mit {{ data['guest']['1']['name'] }} in einem Zimmer schlafen außerdem noch
   {% endif %}
 {% endfor %}
 </ul>
+{% endif %}
 <br>
+{% if data['notes'] %}
+Außerdem wollen wir noch folgendes anmerken:<br>
+<br>
+{{ data['notes'] }}
+<br>
+<br>
+{% endif %}
 Für etwaige Fragen könnt ihr direkt auf diese Email antworten
-um mit {{ data['guest']['1']['name'] }} in Kontakt zu treten oder ihr schreibt eine neue Email an 
+um mit {{ data['guests'][0]['name'] }} in Kontakt zu treten oder ihr schreibt eine neue Email an 
 {{ data['sender_email'] }} um mit dem Brautpaar in Verbindung zu treten.
 
-Mit lieben Grüßen {{ data['guest']['1']['name'] }}
+Mit lieben Grüßen {{ data['guests'][0]['name'] }}
