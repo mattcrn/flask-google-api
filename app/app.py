@@ -31,7 +31,7 @@ def send_mail():
     hotel_booking.body = render_template('hotel-booking.txt', data=clean_data)
     hotel_booking.cc = [clean_data['guests'][0]['mail']]
     hotel_booking.reply_to = clean_data['guests'][0]['mail']
-    assert(hotel_booking.send(), 'Could not send Hotel reservation Mail')
+    assert hotel_booking.send(), 'Could not send Hotel reservation Mail' 
 
     return jsonify('Email sent!')
 
